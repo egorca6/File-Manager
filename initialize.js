@@ -21,14 +21,25 @@ export const initialize = () => {
     if (input === ".exit") {
       console.log(`Thank you for using File Manager, ${username}, goodbye!`);
       exit();
-    }
-    if (input === "up") {
+    } else if (input === "up") {
       const currentDir = cwd();
       const parentDir = path.resolve(currentDir, "..");
       process.chdir(parentDir);
       console.log(`You are now in, ${cwd()}!`);
+    } else if (input.startsWith("cd ")) {
+      const targetDir = input.slice(3).trim();
+      const currentDir = cwd();
+
+      try {
+        const absolutePath = path.resolve(currentDir, targetDir);
+        process.chdir(absolutePath);
+        console.log(`You are now in, ${cwd()}!`);
+      } catch (error) {
+        console.error(`Error: ${error.message}`);
+      }
     } else {
       console.log(`You are currently in, ${cwd()}!`);
+      console.log(`Invalid input`);
     }
   });
 };
