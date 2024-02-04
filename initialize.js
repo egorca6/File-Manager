@@ -1,6 +1,7 @@
 import { stdin, exit, cwd, argv } from "node:process";
 import os from "node:os";
 import path from "node:path";
+import { listDirectory } from "./listDirectory.js";
 
 export const initialize = () => {
   const args = argv.slice(2);
@@ -37,6 +38,8 @@ export const initialize = () => {
       } catch (error) {
         console.error(`Error: ${error.message}`);
       }
+    } else if (input === "ls") {
+      listDirectory();
     } else {
       console.log(`You are currently in, ${cwd()}!`);
       console.log(`Invalid input`);
