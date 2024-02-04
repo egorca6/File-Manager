@@ -2,8 +2,17 @@ import { stdin, exit, cwd, argv } from "node:process";
 import os from "node:os";
 import path from "node:path";
 import { listDirectory } from "./listDirectory.js";
+import {
+  catOperation,
+  addOperation,
+  rnOperation,
+  cpOperation,
+  rmOperation,
+  mvOperation,
+} from "./basicOperations.js";
 
 export const initialize = () => {
+  stdin.removeAllListeners("data");
   const args = argv.slice(2);
   const username = args.join().slice(11) || "Guest";
 
@@ -40,9 +49,51 @@ export const initialize = () => {
       }
     } else if (input === "ls") {
       listDirectory();
+    } else if (input.startsWith("cat ")) {
+      const filePath = input.slice(4);
+      catOperation(filePath);
+    } else if (input.startsWith("add ")) {
+      const fileName = input.slice(4).trim();
+      addOperation(fileName, cwd());
+    } else if (input.startsWith("rn ")) {
+      const args = input.slice(3).trim().split(" ");
+      if (args.length !== 2) {
+        console.error(
+          "Invalid input: Provide source file path and target filename"
+        );
+        return;
+      }
+      const sourcePath = args[0];
+      const targetFilename = args[1];
+      rnOperation(sourcePath, targetFilename, cwd());
+    } else if (input.startsWith("cp ")) {
+      const args = input.slice(3).trim().split(" ");
+      if (args.length !== 2) {
+        console.error(
+          "Invalid input: Provide source file path and target directory path"
+        );
+        return;
+      }
+      const sourcePath = args[0];
+      const targetDirectory = args[1];
+      cpOperation(sourcePath, targetDirectory);
+    } else if (input.startsWith("rm ")) {
+      const filePath = input.slice(3).trim();
+      rmOperation(filePath);
+    } else if (input.startsWith("mv ")) {
+      const args = input.slice(3).trim().split(" ");
+      if (args.length !== 2) {
+        console.error(
+          "Invalid input: Provide source file path and target directory path"
+        );
+        return;
+      }
+      const sourcePath = args[0];
+      const targetDirectory = args[1];
+      mvOperation(sourcePath, targetDirectory);
     } else {
-      console.log(`You are currently in, ${cwd()}!`);
-      console.log(`Invalid input`);
+      console.log(`Invalid input: ${input}`);
+      console.log(`You are currently in, ${cwd()}`);
     }
   });
 };
