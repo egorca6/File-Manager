@@ -10,6 +10,13 @@ import {
   rmOperation,
   mvOperation,
 } from "./basicOperations.js";
+import {
+  getEOL,
+  getCPUsInfo,
+  getHomeDirectory,
+  getCurrentUsername,
+  getCPUBinary,
+} from "./operatingSystem.js";
 
 export const initialize = () => {
   stdin.removeAllListeners("data");
@@ -91,6 +98,16 @@ export const initialize = () => {
       const sourcePath = args[0];
       const targetDirectory = args[1];
       mvOperation(sourcePath, targetDirectory);
+    } else if (input === "os --EOL") {
+      getEOL();
+    } else if (input === "os --cpus") {
+      getCPUsInfo();
+    } else if (input === "os --homedir") {
+      getHomeDirectory();
+    } else if (input === "os --username") {
+      getCurrentUsername();
+    } else if (input === "os --architecture") {
+      getCPUBinary();
     } else {
       console.log(`Invalid input: ${input}`);
       console.log(`You are currently in, ${cwd()}`);
