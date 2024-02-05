@@ -17,6 +17,7 @@ import {
   getCurrentUsername,
   getCPUBinary,
 } from "./operatingSystem.js";
+import { compressFile, decompressFile } from "./compression.js";
 
 export const initialize = () => {
   stdin.removeAllListeners("data");
@@ -108,6 +109,28 @@ export const initialize = () => {
       getCurrentUsername();
     } else if (input === "os --architecture") {
       getCPUBinary();
+    } else if (input.startsWith("compress ")) {
+      const args = input.slice(9).trim().split(" ");
+      if (args.length !== 2) {
+        console.error(
+          "Invalid input: Provide source file path and destination file path"
+        );
+        return;
+      }
+      const sourcePath = args[0];
+      const destinationPath = args[1];
+      compressFile(sourcePath, destinationPath);
+    } else if (input.startsWith("decompress ")) {
+      const args = input.slice(11).trim().split(" ");
+      if (args.length !== 2) {
+        console.error(
+          "Invalid input: Provide source file path and destination file path"
+        );
+        return;
+      }
+      const sourcePath = args[0];
+      const destinationPath = args[1];
+      decompressFile(sourcePath, destinationPath);
     } else {
       console.log(`Invalid input: ${input}`);
       console.log(`You are currently in, ${cwd()}`);
