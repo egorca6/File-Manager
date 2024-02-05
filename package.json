@@ -1,0 +1,24 @@
+{
+  "name": "file",
+  "version": "1.0.0",
+  "description": "File Manager",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/egorca6/File-Manager.git"
+  },
+  "keywords": [
+    "nodejs",
+    "assignments"
+  ],
+  "author": "Egor",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/egorca6/File-Manager/issues"
+  },
+  "homepage": "https://github.com/egorca6/File-Manager#readme"
+}
