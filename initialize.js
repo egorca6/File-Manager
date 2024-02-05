@@ -18,6 +18,7 @@ import {
   getCPUBinary,
 } from "./operatingSystem.js";
 import { compressFile, decompressFile } from "./compression.js";
+import { calculateHash } from "./hash.js";
 
 export const initialize = () => {
   stdin.removeAllListeners("data");
@@ -131,6 +132,9 @@ export const initialize = () => {
       const sourcePath = args[0];
       const destinationPath = args[1];
       decompressFile(sourcePath, destinationPath);
+    } else if (input.startsWith("hash ")) {
+      const filePath = input.slice(5).trim();
+      calculateHash(filePath);
     } else {
       console.log(`Invalid input: ${input}`);
       console.log(`You are currently in, ${cwd()}`);
